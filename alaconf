@@ -1,0 +1,67 @@
+# Alacritty config for Windows -> SSH -> Linux VM (with tmux)
+# Location: %APPDATA%\alacritty\alacritty.toml
+# Changes reload live; no restart needed.
+
+# --- Startup: open straight into a persistent tmux session on the VM ---
+# Replace you@your-vm with your login (or a Host alias from %USERPROFILE%\.ssh\config).
+# "tmux new -A -s main" attaches to the session "main" if it exists, otherwise creates it.
+# If tmux isn't installed on the VM, the window will close immediately.
+[terminal.shell]
+program = "ssh"
+args = ["-t", "you@your-vm", "tmux new -A -s main"]
+
+# Advertise a terminal type every Linux box already knows,
+# so vim/htop/less behave correctly on the VM.
+[env]
+TERM = "xterm-256color"
+
+[window]
+dimensions = { columns = 140, lines = 40 }
+padding = { x = 8, y = 6 }
+dynamic_padding = true
+opacity = 1.0            # keep at 1.0: transparency adds compositing work
+
+[font]
+size = 11.0
+# Ships with Windows 11. Use "Consolas" if it's missing,
+# or a Nerd Font if your prompt uses icons.
+normal = { family = "Cascadia Mono", style = "Regular" }
+
+[cursor]
+style = { shape = "Block", blinking = "Off" }   # no blink = fewer redraws
+unfocused_hollow = true
+
+[selection]
+save_to_clipboard = true   # selecting text copies it
+
+[mouse]
+hide_when_typing = true
+
+# --- Colors: Tokyo Night ---
+[colors.primary]
+background = "#1a1b26"
+foreground = "#c0caf5"
+
+[colors.normal]
+black   = "#15161e"
+red     = "#f7768e"
+green   = "#9ece6a"
+yellow  = "#e0af68"
+blue    = "#7aa2f7"
+magenta = "#bb9af7"
+cyan    = "#7dcfff"
+white   = "#a9b1d6"
+
+[colors.bright]
+black   = "#414868"
+red     = "#f7768e"
+green   = "#9ece6a"
+yellow  = "#e0af68"
+blue    = "#7aa2f7"
+magenta = "#bb9af7"
+cyan    = "#7dcfff"
+white   = "#c0caf5"
+
+[colors.selection]
+background = "#283457"
+text = "CellForeground"
